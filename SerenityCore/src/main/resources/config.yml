@@ -1,0 +1,2 @@
+onFirstJoin: "lp user %player% parent set player"
+onJoin: "dm open %player% welcome"

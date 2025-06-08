@@ -1,0 +1,4 @@
+name: SerenityCore
+version: '1.0'
+main: com.serenity.serenityCore.SerenityCore
+api-version: '1.21'
