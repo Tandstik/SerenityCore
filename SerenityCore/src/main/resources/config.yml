@@ -1,2 +1,10 @@
 onFirstJoin: "lp user %player% parent set player"
 onJoin: "dm open %player% welcome"
+
+blocks:
+  dia:
+    block: diamond_ore
+    type: first # or every
+    rewards:
+      - "say example!"
+      - "give %player% gold"
