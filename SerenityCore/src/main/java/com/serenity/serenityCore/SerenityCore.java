@@ -10,6 +10,7 @@ public final class SerenityCore extends JavaPlugin {
         getLogger().info("SerenityCore has been enabled!");
         saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(this), this);
     }
 
     @Override
