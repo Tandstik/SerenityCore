@@ -13,6 +13,8 @@ import java.util.*;
 public class BlockPlaceListener implements Listener {
 
     private final SerenityCore plugin;
+
+    // Player Logger
     private final Map<UUID, Set<String>> playerFirstPlacedBlocks = new HashMap<>();
 
     public BlockPlaceListener(SerenityCore plugin) {
@@ -36,10 +38,8 @@ public class BlockPlaceListener implements Listener {
             if (!configBlockName.equals(placedBlockName)) continue;
 
             String type = blockConfig.getString("type", "every").toLowerCase();
-            List<String> rewards = blockConfig.getStringList("rewards");
 
             boolean shouldReward = false;
-
             if (type.equals("every")) {
                 shouldReward = true;
             } else if (type.equals("first")) {
@@ -51,8 +51,15 @@ public class BlockPlaceListener implements Listener {
             }
 
             if (shouldReward) {
-                for (String message : rewards) {
-                    String replaced = message.replace("%player%", player.getName());
+                List<String> commands = blockConfig.getStringList("commands");
+                for (String cmd : commands) {
+                    String replaced = cmd.replace("%player%", player.getName());
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), replaced);
+                }
+
+                List<String> messages = blockConfig.getStringList("messages");
+                for (String msg : messages) {
+                    String replaced = msg.replace("%player%", player.getName());
                     replaced = translateColors(replaced);
                     player.sendMessage(replaced);
                 }
@@ -61,7 +68,7 @@ public class BlockPlaceListener implements Listener {
         }
     }
 
-    // & ve hex renk kodlarını çevirir
+    // & and hex colors
     private String translateColors(String message) {
         if (message == null) return null;
 
@@ -71,7 +78,7 @@ public class BlockPlaceListener implements Listener {
         return message;
     }
 
-    // Hex renk kodlarını (&+#RRGGBB)
+    // Hex converter 
     private String translateHexColors(String message) {
         StringBuilder builder = new StringBuilder();
         char[] chars = message.toCharArray();
@@ -85,7 +92,6 @@ public class BlockPlaceListener implements Listener {
                     i += 7;
                     continue;
                 } catch (IllegalArgumentException ignored) {
-                    // Geçersiz hex ise devam
                 }
             }
             builder.append(chars[i]);
