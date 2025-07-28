@@ -8,13 +8,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerListener implements Listener {
 
-
     private final SerenityCore plugin;
 
     public PlayerListener(SerenityCore plugin) {
         this.plugin = plugin;
     }
-
 
     @EventHandler
     public void onFirstJoin(PlayerJoinEvent e) {
@@ -22,7 +20,7 @@ public class PlayerListener implements Listener {
 
         if (!player.hasPlayedBefore()) {
             String firstJoin = plugin.getConfig().getString("onFirstJoin");
-            if (firstJoin != null) {
+            if (firstJoin != null && !firstJoin.isEmpty()) {
                 String onFirstJoin = firstJoin.replace("%player%", player.getName());
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), onFirstJoin);
             }
@@ -34,7 +32,7 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
 
         String joinEvery = plugin.getConfig().getString("onJoin");
-        if (joinEvery != null) {
+        if (joinEvery != null && !joinEvery.isEmpty()) {
             String onJoinEvery = joinEvery.replace("%player%", player.getName());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), onJoinEvery);
         }
