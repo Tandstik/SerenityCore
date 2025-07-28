@@ -8,3 +8,6 @@ blocks:
     rewards:
       - "say example!"
       - "give %player% gold"
+    messages:
+      - "&Congrats %player%, you place a diamond ore!"
+      - "&#FF00FFHex example!" 
